@@ -4,9 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Order;
 use App\Form\OrderType;
+use App\Service\OrderService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -14,14 +14,17 @@ use Symfony\Component\Routing\Annotation\Route;
 class LandingPageController extends AbstractController
 {
     #[Route('/', name: 'landing_page', methods: ['GET', 'POST'])]
-    public function index(Request $request, ParameterBagInterface $parameterBag, EntityManagerInterface $entityManager): Response
+    public function index(Request $request, EntityManagerInterface $entityManager, OrderService $orderService): Response
     {
         $order = new Order();
         $form = $this->createForm(OrderType::class, $order);
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
-            dd($order);
+            $order->setStatus('WAITING');
+            $entityManager->persist($order);
+            $entityManager->flush();
+            $order = $orderService->sendOrder($order);
             $entityManager->persist($order);
             $entityManager->flush();
         }

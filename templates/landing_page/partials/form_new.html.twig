@@ -12,7 +12,6 @@
 {# Etape 2 #}
 <div class="card step_2">
 	<div class="card-content">
-	{{ form_errors(form) }}
 		<span class="card-title color_product_primary center-align">Étape 2</span>
 		<p class="h6 center-align">Remplissez ce formulaire</p>
 		<div class="form-wrapper">
@@ -66,6 +65,8 @@
 				{{ form_label(form.customer.email.second) }}
 				<div class="form-error">{{ form_errors(form.customer.email.second) }}</div>
 			</div>
+	<div class="form-error">{{ form_errors(form) }}</div>
+
 		</div>
 	</div>
 	<ul class="collapsible">
@@ -129,7 +130,7 @@
 				<div class="collapsible-body card-form">
 					<div class="row">
 						<div class="center-align">
-							<button type="submit" name="order[payment_method]" value="lpmonetico" class="btn-large btn-block waves-effect waves-light">Continuer</button>
+							<button type="submit" name="order[paymentMethod]" value="stripe" class="btn-large btn-block waves-effect waves-light">Continuer</button>
 							<p>J'accepte les
 								<a href="https://feelwellshop.com/fr/conditions-generales-de-ventes" target="_blank">conditions générales de vente</a>
 							</p>
@@ -144,8 +145,7 @@
 				<div class="collapsible-body">
 					<div class="row">
 						<div class="center-align">
-							{# name="order[payment_method]" value="lppaypal"#}
-							<button type="submit"  class="btn-large btn-block waves-effect waves-light">Continuer sur PayPal</button> 
+							<button type="submit" name="order[paymentMethod]" value="paypal" class="btn-large btn-block waves-effect waves-light">Continuer sur PayPal</button> 
 							<p>J'accepte les
 								<a href="https://feelwellshop.com/fr/conditions-generales-de-ventes" target="_blank">conditions générales de vente</a>
 							</p>

@@ -14,19 +14,19 @@ class Order
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne]
+    #[ORM\ManyToOne(cascade: ['persist'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?Product $product = null;
 
-    #[ORM\ManyToOne]
+    #[ORM\ManyToOne(cascade: ['persist'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?Customer $customer = null;
 
-    #[ORM\ManyToOne]
+    #[ORM\ManyToOne(cascade: ['persist'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?Adress $billingAdress = null;
 
-    #[ORM\ManyToOne]
+    #[ORM\ManyToOne(cascade: ['persist'])]
     private ?Adress $shippingAdress = null;
 
     #[ORM\Column(length: 255)]
@@ -34,6 +34,9 @@ class Order
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $paymentMethod = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $orderId = null;
 
     public function getId(): ?int
     {
@@ -108,6 +111,18 @@ class Order
     public function setPaymentMethod(?string $paymentMethod): static
     {
         $this->paymentMethod = $paymentMethod;
+
+        return $this;
+    }
+
+    public function getOrderId(): ?int
+    {
+        return $this->orderId;
+    }
+
+    public function setOrderId(?int $orderId): static
+    {
+        $this->orderId = $orderId;
 
         return $this;
     }
