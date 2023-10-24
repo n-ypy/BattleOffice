@@ -4,7 +4,9 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
-    api_key: '%env(API_KEY)%'
+    commerce_api_key: '%env(COMMERCE_API_KEY)%'
+    stripe_api_key: '%env(STRIPE_API_KEY)%'
+    stripe_endpoint_secret: '%env(ENDPOINT_SECRET)%'
 
 services:
     # default configuration for services in *this* file
@@ -23,6 +25,8 @@ services:
 
     App\Service\OrderService:
             arguments:
-                $apiKey: '%api_key%'
+                $commerceApiKey: '%commerce_api_key%'
+                $stripeApiKey: '%stripe_api_key%'
+                $stripeEndpointSecret: '%stripe_endpoint_secret%'
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

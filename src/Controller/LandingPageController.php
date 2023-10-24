@@ -24,9 +24,7 @@ class LandingPageController extends AbstractController
             $order->setStatus('WAITING');
             $entityManager->persist($order);
             $entityManager->flush();
-            $order = $orderService->sendOrder($order);
-            $entityManager->persist($order);
-            $entityManager->flush();
+            return $orderService->sendOrder($order);
         }
 
         return $this->render('landing_page/index_new.html.twig', [
@@ -35,8 +33,14 @@ class LandingPageController extends AbstractController
     }
 
     #[Route('/confirmation', name: 'confirmation')]
-    public function confirmation(): Response
+    public function confirmation(Request $request, OrderService $orderService): Response
     {
         return $this->render('landing_page/confirmation.html.twig');
+    }
+
+    #[Route('/webhook', name: 'app_webhook')]
+    public function webhookPage(OrderService $orderService)
+    {
+        $orderService->webhook();
     }
 }

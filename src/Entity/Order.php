@@ -38,6 +38,9 @@ class Order
     #[ORM\Column(nullable: true)]
     private ?int $orderId = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $stripeSessionId = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -123,6 +126,18 @@ class Order
     public function setOrderId(?int $orderId): static
     {
         $this->orderId = $orderId;
+
+        return $this;
+    }
+
+    public function getStripeSessionId(): ?string
+    {
+        return $this->stripeSessionId;
+    }
+
+    public function setStripeSessionId(string $stripeSessionId): static
+    {
+        $this->stripeSessionId = $stripeSessionId;
 
         return $this;
     }
