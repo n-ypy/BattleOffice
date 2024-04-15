@@ -8,6 +8,7 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Email;
 
 class CustomerType extends AbstractType
 {
@@ -19,7 +20,8 @@ class CustomerType extends AbstractType
                 'invalid_message' => "L'email et la confirmation ne sont pas identiques.",
                 'required' => true,
                 'first_options' => ['label' => 'Email'],
-                'second_options' => ['label' => 'Confirmation email']
+                'second_options' => ['label' => 'Confirmation email'],
+                'constraints' => [new Email()]
             ]);
     }
 

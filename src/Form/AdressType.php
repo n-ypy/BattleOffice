@@ -9,6 +9,8 @@ use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Positive;
+use Symfony\Component\Validator\Constraints\Type;
 
 class AdressType extends AbstractType
 {
@@ -35,9 +37,10 @@ class AdressType extends AbstractType
                 'label' => 'Ville',
                 'required' => true
             ])
-            ->add('zipCode', TextType::class, [
+            ->add('zipCode', null, [
                 'label' => 'Code postal',
-                'required' => true
+                'required' => true,
+                'constraints' => [new Type('integer'), new Positive()]
             ])
             ->add('country', CountryType::class, [
                 'placeholder' => 'Sélectionnez...',
