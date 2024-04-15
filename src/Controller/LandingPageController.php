@@ -39,8 +39,8 @@ class LandingPageController extends AbstractController
     }
 
     #[Route('/webhook', name: 'app_webhook')]
-    public function webhookPage(OrderService $orderService)
+    public function webhookPage(OrderService $orderService) : Response
     {
-        $orderService->webhook();
+        return $orderService->webhook();
     }
 }

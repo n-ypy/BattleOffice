@@ -15,6 +15,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\RedirectController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Serializer\Encoder\JsonDecode;
@@ -122,8 +123,8 @@ class OrderService
 
         $session = $stripe->checkout->sessions->create([
             'mode' => 'payment',
-            'success_url' => 'http://tp-ecommerce.dvl.to/confirmation',
-            'cancel_url' => 'http://tp-ecommerce.dvl.to/',
+            'success_url' => 'http://battleoffice.dvl.to/confirmation',
+            'cancel_url' => 'http://battleoffice.dvl.to/',
             'customer_email' => $order->getCustomer()->getEmail(),
             'line_items' => [
                 [
@@ -168,21 +169,22 @@ class OrderService
             );
         } catch (UnexpectedValueException $e) {
             // Invalid payload
-            http_response_code(400);
-            exit();
+            return (new Response())->setStatusCode(400);
         } catch (SignatureVerificationException $e) {
             // Invalid signature
-            http_response_code(400);
-            exit();
+            return (new Response())->setStatusCode(400);
         }
 
         switch ($event->type) {
             case 'checkout.session.completed':
                 $orderId = $event->data->object->id;
                 $this->setOrderStatusAndSendEmail($orderId);
+                return (new Response())->setStatusCode(200);
             default:
                 echo 'Received unknown event type ' . $event->type;
+                return (new Response())->setStatusCode(200);
         }
+        return (new Response())->setStatusCode(400);
     }
 
     private function setOrderStatusAndSendEmail(string $stripeSessionId){
