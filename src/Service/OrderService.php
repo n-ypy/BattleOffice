@@ -212,7 +212,7 @@ class OrderService
     private function sendOrderConfirmationEmail($order){
 
         $email = (new TemplatedEmail())
-        ->from('easytp@toto.to')
+        ->from('g404ebus@gmail.com')
         ->to($order->getCustomer()->getEmail())
         ->subject('Order confirmation ')
         ->htmlTemplate('emails/confirmation.html.twig')
