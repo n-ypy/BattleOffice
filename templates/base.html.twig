@@ -61,6 +61,7 @@
 				</footer>
 
 				{% block javascripts %}
+            {% block importmap %}{{ importmap('app') }}{% endblock %}
                 {{importmap()}}
 					<script src="{{asset('js/materialize.js')}}"></script>
 					<script src="{{asset('js/main.js')}}"></script>

@@ -16,6 +16,6 @@
 return [
     'app' => [
         'path' => 'app.js',
-        'preload' => true,
+        'entrypoint' => true,
     ],
 ];
