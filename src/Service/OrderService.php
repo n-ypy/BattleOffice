@@ -7,6 +7,7 @@ use App\Repository\OrderRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Stripe\Exception\SignatureVerificationException;
 use Stripe\Exception\UnexpectedValueException;
+use Stripe\HttpClient\GuzzleClient;
 use Stripe\Stripe;
 use Stripe\StripeClient;
 use Stripe\Webhook;
@@ -22,7 +23,6 @@ use Symfony\Component\Mime\Email;
 use Symfony\Component\Serializer\Encoder\JsonDecode;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
-use GuzzleHttp\Client;
 
 class OrderService
 {
@@ -119,7 +119,7 @@ class OrderService
 
     private function startStripePayment(Order $order)
     {
-        $client = new Client();
+        $client = new GuzzleClient();
         \Stripe\ApiRequestor::setHttpClient($client);
         Stripe::setApiVersion('2023-10-16');
         Stripe::setApiKey($this->stripeApiKey);
