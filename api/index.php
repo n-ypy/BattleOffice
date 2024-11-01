@@ -8,4 +8,4 @@
 //     return new Kernel($context['APP_ENV'], (bool) $context['APP_DEBUG']);
 // };
 
-echo \curl_version();
+echo phpinfo();
