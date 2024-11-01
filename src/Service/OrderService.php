@@ -13,6 +13,7 @@ use Stripe\Webhook;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\RedirectController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -41,6 +42,7 @@ class OrderService
         $this->commerceApiKey = $commerceApiKey;
         $this->stripeApiKey = $stripeApiKey;
         $this->stripeEndpointSecret = $stripeEndpointSecret;
+
     }
 
     public function sendOrder(Order $order)
@@ -116,6 +118,7 @@ class OrderService
 
     private function startStripePayment(Order $order)
     {
+        \Stripe\ApiRequestor::setHttpClient($this->client);
         Stripe::setApiVersion('2023-10-16');
         Stripe::setApiKey($this->stripeApiKey);
 
