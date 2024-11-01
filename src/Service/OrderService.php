@@ -22,6 +22,7 @@ use Symfony\Component\Mime\Email;
 use Symfony\Component\Serializer\Encoder\JsonDecode;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
+use GuzzleHttp\Client;
 
 class OrderService
 {
@@ -118,7 +119,8 @@ class OrderService
 
     private function startStripePayment(Order $order)
     {
-        \Stripe\ApiRequestor::setHttpClient($this->client);
+        $client = new Client();
+        \Stripe\ApiRequestor::setHttpClient($client);
         Stripe::setApiVersion('2023-10-16');
         Stripe::setApiKey($this->stripeApiKey);
 
